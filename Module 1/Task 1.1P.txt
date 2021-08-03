@@ -1,0 +1,39 @@
+//Github Link: https://github.com/AliAsher/SIT315
+
+// C++ code
+
+//Configuration of pins
+const uint8_t Senor_PIN = 2;
+const uint8_t LED_PIN = 13;
+
+//Global variables
+uint8_t SensorPrevState = LOW;
+
+//Execution of code
+void setup()
+{
+	pinMode(Senor_PIN, INPUT);
+    	pinMode(LED_PIN, OUTPUT);
+    	attachInterrupt(0,pin_ISR,CHANGE);
+    	Serial.begin(9600);
+}
+
+void loop()
+{
+	//Empty
+}
+
+//What happens when interrupt occurs
+void pin_ISR()
+{
+	SensorPrevState = digitalRead(Senor_PIN);
+    	digitalWrite(LED_PIN, SensorPrevState);
+    	uint8_t ledState = digitalRead(LED_PIN);
+    
+    	uint8_t sensorReading = digitalRead(Senor_PIN);
+    
+    	//Print state of sensor and LED to serial monitor
+    	Serial.print(sensorReading);
+    	Serial.print(ledState);
+    	Serial.println("");
+}
