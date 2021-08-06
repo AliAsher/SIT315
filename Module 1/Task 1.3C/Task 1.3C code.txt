@@ -1,0 +1,62 @@
+﻿Github Link: https://github.com/AliAsher/SIT315
+
+// C++ code
+
+//Configuration of pins
+const uint8_t Senor1_PIN = 2;
+const uint8_t Senor2_PIN = 3;
+
+const uint8_t LED_PIN = 13;
+const uint8_t LED2_PIN = 12;
+
+
+//Global variables
+uint8_t SensorPrevState = LOW;
+
+//Execution of code
+void setup()
+{
+	pinMode(Senor1_PIN, INPUT);
+    	pinMode(Senor2_PIN, INPUT);
+    	pinMode(LED_PIN, OUTPUT);
+    	pinMode(LED2_PIN, OUTPUT);
+    	attachInterrupt(0,pin_ISR,CHANGE);
+    	attachInterrupt(1,pin2_ISR,CHANGE);
+    	Serial.begin(9600);
+}
+
+void loop()
+{
+	//Empty
+}
+
+//What happens when interrupt occurs for motion sensor 1
+void pin_ISR()
+{
+	SensorPrevState = digitalRead(Senor1_PIN);
+    	digitalWrite(LED_PIN, SensorPrevState);
+    	uint8_t ledState = digitalRead(LED_PIN);
+    
+    	uint8_t sensorReading = digitalRead(Senor1_PIN);
+    
+    	//Print state of sensor and LED to serial monitor
+    	Serial.print(sensorReading);
+    	Serial.print(ledState);
+    	Serial.println(": Sensor 1");
+}
+
+//What happens when interrupt occurs for motion sensor 2
+void pin2_ISR()
+{
+	SensorPrevState = digitalRead(Senor2_PIN);
+    	digitalWrite(LED2_PIN, SensorPrevState);
+    	uint8_t ledState = digitalRead(LED2_PIN);
+    
+    	uint8_t sensorReading = digitalRead(Senor2_PIN);
+    
+    	//Print state of sensor and LED to serial monitor
+    	Serial.print(sensorReading);
+    	Serial.print(ledState);
+    	Serial.println(": Sensor 2");
+
+}
